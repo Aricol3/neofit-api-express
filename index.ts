@@ -28,6 +28,7 @@ app.post("/food", async (req, res) => {
         const {
             brand_name,
             description,
+            barcode,
             serving_sizes,
             nutritional_contents,
             type,
@@ -36,10 +37,10 @@ app.post("/food", async (req, res) => {
             country_code,
         } = req.body;
 
-        // Create a new food item
         const food = new Food({
             brand_name,
             description,
+            barcode,
             serving_sizes,
             nutritional_contents,
             type,
@@ -50,10 +51,8 @@ app.post("/food", async (req, res) => {
 
         console.log(food)
 
-        // Save to database
         const savedFood = await food.save();
 
-        // Send response
         res.status(201).json({
             message: "Food item created successfully",
             food: savedFood,
@@ -64,7 +63,32 @@ app.post("/food", async (req, res) => {
     }
 });
 
-// Start server
+app.get("/food", async (req, res) => {
+    try {
+        const { barcode } = req.query;
+        console.log(barcode)
+
+        if (!barcode || typeof barcode !== "string") {
+            return res.status(400).json({ error: "Valid barcode is required" });
+        }
+
+        const foodItem = await Food.findOne({ barcode });
+        console.log(foodItem)
+
+        if (!foodItem) {
+            return res.status(404).json({ error: "Food item not found" });
+        }
+
+        res.status(200).json({
+            message: "Food item retrieved successfully",
+            food: foodItem,
+        });
+    } catch (error) {
+        console.error("Error retrieving food item:", error);
+        res.status(500).json({ error: "Failed to retrieve food item" });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
 });
