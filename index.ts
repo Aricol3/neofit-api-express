@@ -20,15 +20,15 @@ app.use(bodyParser.json());
 app.use(cors<Request>());
 
 app.get("/", (req, res) => {
-    res.json({ message: "Hello Neofit!" });
+    res.json({message: "Hello Neofit!"});
 });
 
 app.post("/food", async (req, res) => {
     try {
         const {
+            barcode,
             brand_name,
             description,
-            barcode,
             serving_sizes,
             nutritional_contents,
             type,
@@ -38,9 +38,9 @@ app.post("/food", async (req, res) => {
         } = req.body;
 
         const food = new Food({
+            barcode,
             brand_name,
             description,
-            barcode,
             serving_sizes,
             nutritional_contents,
             type,
@@ -59,24 +59,24 @@ app.post("/food", async (req, res) => {
         });
     } catch (error) {
         console.error("Error creating food item:", error);
-        res.status(500).json({ error: "Failed to create food item" });
+        res.status(500).json({error: "Failed to create food item"});
     }
 });
 
 app.get("/food", async (req, res) => {
     try {
-        const { barcode } = req.query;
+        const {barcode} = req.query;
         console.log(barcode)
 
         if (!barcode || typeof barcode !== "string") {
-            return res.status(400).json({ error: "Valid barcode is required" });
+            return res.status(400).json({error: "Valid barcode is required"});
         }
 
-        const foodItem = await Food.findOne({ barcode });
+        const foodItem = await Food.findOne({barcode});
         console.log(foodItem)
 
         if (!foodItem) {
-            return res.status(404).json({ error: "Food item not found" });
+            return res.status(404).json({error: "Food item not found"});
         }
 
         res.status(200).json({
@@ -85,7 +85,7 @@ app.get("/food", async (req, res) => {
         });
     } catch (error) {
         console.error("Error retrieving food item:", error);
-        res.status(500).json({ error: "Failed to retrieve food item" });
+        res.status(500).json({error: "Failed to retrieve food item"});
     }
 });
 

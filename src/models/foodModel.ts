@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+
+// SERVINGS_PER_CONTAINER IS NOT USED
 
 const servingSizeSchema = new mongoose.Schema({
     nutrition_multiplier: Number,
@@ -11,7 +13,7 @@ const servingSizeSchema = new mongoose.Schema({
 const energySchema = new mongoose.Schema({
     value: Number,
     unit: String,
-});
+}, {_id: false});
 
 const nutritionalContentsSchema = new mongoose.Schema({
     grams: Number,
@@ -20,11 +22,10 @@ const nutritionalContentsSchema = new mongoose.Schema({
     fat: Number,
     saturated_fat: Number,
     carbohydrates: Number,
-    net_carbs: Number,
     sugar: Number,
     sodium: Number,
     fiber: Number,
-});
+}, {_id: false});
 
 const foodSchema = new mongoose.Schema({
     description: String,
@@ -33,7 +34,7 @@ const foodSchema = new mongoose.Schema({
     serving_sizes: [servingSizeSchema],
     verified: Boolean,
     nutritional_contents: nutritionalContentsSchema,
-    type: { type: String, enum: ['food'] },
+    type: {type: String, enum: ['food']},
     user_id: String,
     public: Boolean,
     deleted: Boolean,
