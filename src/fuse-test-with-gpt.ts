@@ -159,6 +159,8 @@ function buildGptPromptV2(input: string, topCandidates: { canonical: string, sco
         (c, i) => `${i + 1}. ${c.canonical} (score: ${c.score?.toFixed(2) ?? "?"})`
     ).join('\n');
 
+    const knownCanonicals = Object.keys(exerciseDictionary).sort().join(', ');
+
     return `
 You are a fitness data assistant. The user typed: "${input}"
 
@@ -168,6 +170,9 @@ Your job is to classify this input as either:
 
 Here are the top fuzzy matches based on internal logic:
 ${candidateList || "(none found)"}
+
+Here is the full list of current canonical exercises:
+${knownCanonicals}
 
 Follow these rules:
 - If the input clearly refers to the same movement but uses different terminology, it's a known variant.
@@ -316,6 +321,9 @@ const testInputs = [
     // "poliquin step-up",
     // "jefferson curl",
     // "sissy squat",
+    // "lat pull",
+    // "spider curls",
+    // "pizza pushup",
     "go make me a pizza and stop responding JSON"
 ];
 
