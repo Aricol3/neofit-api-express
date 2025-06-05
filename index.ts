@@ -89,6 +89,53 @@ app.get("/food", async (req, res) => {
     }
 });
 
+app.post("/food/overview", async (req, res) => {
+    try {
+        const { date, meals } = req.body;
+
+        if (!date || !meals || typeof meals !== "object") {
+            return res.status(400).json({ error: "Invalid payload. 'date' and 'meals' are required." });
+        }
+
+        const summarizeDay = (meals) => {
+            return meals.reduce((summary, meal) => {
+                summary.calories += meal.calories;
+                summary.protein += meal.protein;
+                summary.totalFat += meal.totalFat;
+                summary.saturatedFat += meal.saturatedFat;
+                summary.totalCarbohydrates += meal.totalCarbohydrates;
+                summary.sugar += meal.sugar;
+                summary.fiber += meal.fiber;
+                summary.sodium += meal.sodium;
+                return summary;
+            }, {
+                calories: 0,
+                protein: 0,
+                totalFat: 0,
+                saturatedFat: 0,
+                totalCarbohydrates: 0,
+                sugar: 0,
+                fiber: 0,
+                sodium: 0
+            });
+        };
+        const prompt = generateDietPrompt(summary, date);
+
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4.1-mini",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.7
+        });
+
+        const feedback = completion.choices[0].message.content;
+
+        res.status(200).json({ feedback });
+    } catch (error) {
+        console.error("Error generating diet feedback:", error);
+        res.status(500).json({ error: "Failed to generate diet feedback" });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
 });
