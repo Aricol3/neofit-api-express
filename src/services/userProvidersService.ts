@@ -1,4 +1,4 @@
-import User from "../models/userModel.ts";
+import User from "../models/userProvidersModel.ts";
 
 export async function findOrCreateUser(profile: any) {
     const email = profile.emails?.[0]?.value || profile.email;

@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
+import cookieParser from 'cookie-parser';
 import cors from "cors";
 import foodRoutes from "./routes/foodRoutes";
 import "./config/passport.ts"
@@ -14,6 +15,7 @@ mongoose.connect("mongodb://localhost/neofit")
     .catch((err) => console.error("MongoDB connection error:", err));
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(cors());
 
 app.use("/food", foodRoutes);
