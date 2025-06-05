@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import foodRoutes from "./routes/foodRoutes";
+import "./config/passport.ts"
+import authRoutes from "./routes/authRoutes.ts";
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -15,6 +17,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use("/food", foodRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/", (_, res) => {
     res.json({ message: "Hello Neofit!" })

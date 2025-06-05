@@ -1,5 +1,5 @@
 import {Food} from "../models/foodModel.ts";
-import {generateDietOverview, generateDietOverviewForDay} from "../services/foodService.ts";
+import {generateDietOverviewForDay} from "../services/foodService.ts";
 
 
 export const createFood = async (req, res) => {
