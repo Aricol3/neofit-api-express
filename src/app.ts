@@ -6,6 +6,7 @@ import cors from "cors";
 import foodRoutes from "./routes/foodRoutes";
 import "./config/passport.ts"
 import authRoutes from "./routes/authRoutes.ts";
+import userRoutes from "./routes/userRoutes.ts";
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -20,6 +21,7 @@ app.use(cors());
 
 app.use("/food", foodRoutes);
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 
 app.get("/", (_, res) => {
     res.json({ message: "Hello Neofit!" })
