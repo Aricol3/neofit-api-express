@@ -72,11 +72,33 @@ export const getFoodByBarcode = async (req, res) => {
 export const getDietOverviewForDay = async (req, res) => {
     try {
         const { date, meals, water } = req.body;
-        // console.log("MEALS",date,meals)
         const feedback = await generateDietOverviewForDay(date, meals, water);
         res.status(200).json(feedback);
     } catch (err) {
         console.error("Error generating diet overview:", err);
         res.status(500).json({ error: "Failed to generate diet overview" });
+    }
+};
+
+export const searchFoods = async (req, res) => {
+    try {
+        const { query } = req.query;
+
+        if (!query || typeof query !== "string") {
+            return res.status(400).json({ error: "Search query is required" });
+        }
+
+        const foods = await Food.find({
+            $or: [
+                { description: { $regex: query, $options: "i" } },
+                { brand_name: { $regex: query, $options: "i" } }
+            ],
+            deleted: { $ne: true }
+        }).limit(20);
+
+        res.status(200).json({ foods });
+    } catch (error) {
+        console.error("Error searching for food items:", error);
+        res.status(500).json({ error: "Failed to search for food items" });
     }
 };
