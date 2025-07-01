@@ -71,8 +71,8 @@ export const getFoodByBarcode = async (req, res) => {
 
 export const getDietOverviewForDay = async (req, res) => {
     try {
-        const { date, meals, water } = req.body;
-        const feedback = await generateDietOverviewForDay(date, meals, water);
+        const { date, meals, water, profile } = req.body;
+        const feedback = await generateDietOverviewForDay(date, meals, water, profile);
         res.status(200).json(feedback);
     } catch (err) {
         console.error("Error generating diet overview:", err);

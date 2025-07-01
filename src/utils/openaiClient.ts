@@ -1,15 +1,15 @@
-export const generateDietOverviewPrompt = (meals, nutrition, water) => `
+export const generateDietOverviewPrompt = (meals, nutrition, water, profile) => `
 You are a nutrition coach evaluating a user's daily diet.
 
 **User Info**:  
-- Gender: male  
-- Age: 21  
-- Height: 183 cm  
-- Weight: 85 kg
-- Activity Level: moderate  
-- Goal: muscle gain
+- Gender: ${profile.gender}  
+- Age: ${profile.age}
+- Height: ${profile.height} cm  
+- Weight: ${profile.weight} kg
+- Activity Level: ${profile.activityLevel}  
+- Goal: ${profile.goal}
 - Water intake (ml): ${water}
-- Target calories (kcal): 3300
+- Target calories (kcal): ${profile.caloriesNeeded}
 - Target water intake (ml): 3000
 
 ---

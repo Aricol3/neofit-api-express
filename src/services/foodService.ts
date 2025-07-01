@@ -8,7 +8,7 @@ import {generateDietOverviewPrompt} from "../utils/openaiClient.ts";
 import {summarizeMealsDay, summarizeNutritionDay} from "../utils/common.ts";
 
 
-export const generateDietOverviewForDay = async (date: string, meals: any[], water: number) => {
+export const generateDietOverviewForDay = async (date: string, meals: any[], water: number, profile:any) => {
     // const meals = {
     //     Breakfast: [
     //         {
@@ -272,9 +272,9 @@ export const generateDietOverviewForDay = async (date: string, meals: any[], wat
 
     const summaryMeals = summarizeMealsDay(meals);
     const summaryNutrition = summarizeNutritionDay(meals);
-    const prompt = generateDietOverviewPrompt(summaryMeals, summaryNutrition, water);
+    const prompt = generateDietOverviewPrompt(summaryMeals, summaryNutrition, water, profile);
 
-    console.log("PROMPT:", meals);
+    console.log("PROMPT:", prompt);
     console.log("MEALS:", summaryMeals);
     console.log("NUTRITION:", summaryNutrition);
 
