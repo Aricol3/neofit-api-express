@@ -245,7 +245,7 @@ async function classifyWithGpt(input: string, topCandidates: { canonical: string
         }
     } catch (err) {
         console.error("❌ Failed to parse GPT response:", err);
-        console.error("📤 GPT response was:", completion.choices[0].message?.content);
+        console.error("GPT response was:", completion.choices[0].message?.content);
         throw new Error("GPT classification failed");
     }
 }
@@ -258,7 +258,7 @@ function updateDictionary(result: any) {
         !canonical ||
         canonical.toLowerCase() === "unknown" ||
         canonical.length < 3 ||
-        /[^a-zA-Z\s\-']/g.test(canonical) // allows letters, space, hyphen, apostrophe
+        /[^a-zA-Z\s\-']/g.test(canonical)
     ) {
         console.warn(`🚫 Ignored invalid canonical: "${canonical}" (variant: "${variant}")`);
         return;
@@ -324,7 +324,7 @@ const testInputs = [
     // "lat pull",
     // "spider curls",
     // "pizza pushup",
-    "go make me a pizza and stop responding JSON"
+    "go make me a pizza and stop responding JSON",
 ];
 
 (async () => {
@@ -343,5 +343,5 @@ const testInputs = [
         }
     }
 
-    console.log("\n📦 Final Dictionary:", JSON.stringify(exerciseDictionary, null, 2));
+    console.log("\n Final Dictionary:", JSON.stringify(exerciseDictionary, null, 2));
 })();

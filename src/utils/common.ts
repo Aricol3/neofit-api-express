@@ -65,14 +65,12 @@ export const calculateCaloriesAndMacros = (profile: IUserProfile) => {
 
     let calories = bmr * activityMultipliers[activityLevel];
 
-    // Adjust based on goal
     if (goal === 'lose') calories -= 500;
     if (goal === 'gain') calories += 500;
 
-    // Macros: 40% carbs, 30% protein, 30% fat
     const protein = (calories * 0.3) / 4;
-    const fat = (calories * 0.3) / 9;
     const carbs = (calories * 0.4) / 4;
+    const fat = (calories * 0.3) / 9;
 
     return {
         caloriesNeeded: Math.round(calories),
