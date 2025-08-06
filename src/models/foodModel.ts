@@ -18,7 +18,7 @@ const servingSizeSchema = new Schema({
 }, { _id: true });
 
 // Nutritional contents schema
-const nutritionalContentsSchema = new Schema({
+export const nutritionalContentsSchema = new Schema({
     energy: { type: energySchema, required: true },
 
     // Required Macros
