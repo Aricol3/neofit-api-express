@@ -57,7 +57,7 @@ const foodSchema = new Schema({
     barcode: {type: String, index: true},
     description: {type: String, required: true},
     brand_name: {type: String, required: true},
-    serving_sizes: {type: [servingSizeSchema], default: []},
+    serving_sizes: {type: [servingSizeSchema], default: [], required: true},
     verified: {type: Boolean, default: false},
     nutritional_contents: {type: nutritionalContentsSchema, required: true},
     type: {type: String, enum: ['food'], default: 'food'},

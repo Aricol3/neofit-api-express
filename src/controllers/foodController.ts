@@ -26,6 +26,7 @@ export const createFood = async (req, res) => {
             public: isPublic,
             deleted,
             country_code,
+            user_id: req.auth.id,
         });
 
         console.log(food)
